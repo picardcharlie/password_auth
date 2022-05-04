@@ -6,6 +6,9 @@ from . import main
 
 bootstrap = Bootstrap()
 
+login_manager = LoginManager()
+login_manager.login_view = "auth.login"
+
 
 def create_app(config_name = "default"):
     app = Flask(__name__)
@@ -16,6 +19,8 @@ def create_app(config_name = "default"):
 
     #initilize extensions
     bootstrap.init_app(app)
+
+    login_manager.init_app(app)
 
     from app.models import db
     db.init_app(app)
