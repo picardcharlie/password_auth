@@ -7,8 +7,9 @@ db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     username = db.Column(db.String(64), unique = True, index = True)
-    pasword_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(128))
 
     @property
     def password(self):
@@ -24,3 +25,7 @@ class User(UserMixin, db.Model):
     def __init__(self, username, password):
         self.username = username
         self.password = password
+
+@login_manager.user_loader
+def load_user(uid):
+    return User.query.get(int(uid))

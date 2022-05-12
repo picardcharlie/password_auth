@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from config import config
+from flask_login import LoginManager
 
 from . import main
 
@@ -19,7 +20,6 @@ def create_app(config_name = "default"):
 
     #initilize extensions
     bootstrap.init_app(app)
-
     login_manager.init_app(app)
 
     from app.models import db
