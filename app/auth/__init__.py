@@ -9,14 +9,10 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     signupform = SignUpForm()
     if signupform.validate_on_submit():
-        check_available_user = User.query.filter_by(username=signupform.username.data).first()
-        if check_available_user is None:
-            register_user = User(signupform.username.data, signupform.password.data)
-            db.session.add(register_user)
-            db.session.commit()
-            return redirect(url_for("main.index"))
-        else:
-            flash("username taken.")
+        register_user = User(signupform.username.data, signupform.password.data)
+        db.session.add(register_user)
+        db.session.commit()
+        return redirect(url_for("main.index"))
     return render_template("/auth/register.html", signupform = signupform)
 
 @auth.route("/login", methods=["GET", "POST"])
